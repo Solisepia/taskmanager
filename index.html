@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Task-Notes Manage System</title>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="time">
+                <div id="current-time"></div>
+                <div id="current-date"></div>
+            </div>
+            <div class="nav-buttons">
+                <button id="todo-btn">Todo</button>
+                <button id="notes-btn">Notes</button>
+                <button id="calendar-btn">Calendar</button>
+            </div>
+        </div>
+        <div class="main">
+            <div class="header">
+                <button id="add-btn">+ Add</button>
+                <button id="filter-btn">Filter</button>
+            </div>
+            <div class="content" id="content-area">
+                <table id="task-table">
+                    <thead>
+                        <tr>
+                            <th>Head</th>
+                            <th>Tag</th>
+                            <th>Priority</th>
+                            <th>Due date</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="task-list">
+                        <!-- 任务列表 -->
+                    </tbody>
+                </table>
+                <table id="note-table" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>Head</th>
+                            <th>Tag</th>
+                            <th>Content</th>
+                        </tr>
+                    </thead>
+                    <tbody id="note-list">
+                        <!-- 笔记列表 -->
+                    </tbody>
+                </table>
+                <div id="calendar" style="display:none;">
+                    <h2>Calendar</h2>
+                    <button id="prev-month-btn">Last Month</button>
+                    <button id="next-month-btn">Next Month</button>
+                    <table id="calendar-table">
+                        <thead>
+                            <tr>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-body">
+                            <!-- 日历内容 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="chat">
+            <div id="chat-box">
+                <!-- 聊天内容 -->
+            </div>
+            <input type="text" id="chat-input" placeholder="Input...">
+        </div>
+    </div>
+    <div id="add-task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add</h2>
+            <label for="task-title">Head</label>
+            <input type="text" id="task-title" required>
+            <label for="task-tag">Tag</label>
+            <input type="text" id="task-tag">
+            <div id="priority-date-section">
+                <label for="task-priority">Priority</label>
+                <select id="task-priority">
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+                <label for="task-date">Due date</label>
+                <input type="date" id="task-date">
+            </div>
+            <label for="task-description">Description</label>
+            <textarea id="task-description"></textarea>
+            <button id="save-task-btn">Save</button>
+        </div>
+    </div>
+    <div id="filter-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-filter-modal">&times;</span>
+            <h2 id="filter-modal-title">Filter</h2>
+            
+            <div id="filter-todo" style="display: block;">
+                <label for="filter-priority">Priority:</label>
+                <select id="filter-priority">
+                    <option value="">All</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+                <label for="filter-date-start">Date start:</label>
+                <input type="date" id="filter-date-start">
+                
+                <label for="filter-date-end">Date end:</label>
+                <input type="date" id="filter-date-end">
+
+                <label for="filter-tag-todo">Tag:</label>
+                <select id="filter-tag-todo">
+                    <option value="">All</option>
+                    <!-- 标签选项将在JavaScript中动态生成 -->
+                </select>
+            </div>
+    
+            <div id="filter-notes" style="display: none;">
+                <label for="filter-tag">Tag:</label>
+                <select id="filter-tag">
+                    <option value="">All</option>
+                    <!-- 标签选项将在JavaScript中动态生成 -->
+                </select>
+            </div>
+    
+            <button id="apply-filter-btn">Apply</button>
+            <button id="reset-filter-btn">Reset</button> <!-- 添加重置按钮 -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
