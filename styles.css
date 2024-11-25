@@ -361,17 +361,17 @@ label {
 }
 
 #prev-month-btn, #next-month-btn {
-    background-color: #28a745; /* 按钮背景颜色 */
-    color: white; /* 按钮文字颜色 */
-    border: none; /* 去掉边框 */
-    padding: 10px 10px; /* 内边距 */
-    margin: 10px; /* 外边距 */
-    border-radius: 5px; /* 圆角 */
-    cursor: pointer; /* 鼠标悬停时显示手型 */
-    font-size: 12px; /* 字体大小 */
-    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 #prev-month-btn:hover, #next-month-btn:hover {
-    background-color: #218838; /* 悬停时的背景颜色 */
+    background-color: #218838;
 }
