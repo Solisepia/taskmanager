@@ -423,3 +423,73 @@ document.addEventListener('DOMContentLoaded', function () {
 
     loadTasksAndNotes();
 });
+
+let messages = [];
+document.getElementById('save-api-key-btn').addEventListener('click', function() {
+    let apiKey = document.getElementById('api-key-input').value;
+    if (apiKey.trim() !== "") {
+        localStorage.setItem('chatgpt_api_key', apiKey);
+        alert('API Key saved successfully!');
+    } else {
+        alert('Please enter a valid API Key.');
+    }
+});
+
+function getApiKey() {
+    return localStorage.getItem('chatgpt_api_key');
+}
+
+document.getElementById('chat-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        let userInput = event.target.value;
+        if (userInput.trim() !== "") {
+            messages.push({role: "user", content: userInput});
+
+            let chatBox = document.getElementById('chat-box');
+            let userMessage = document.createElement('div');
+            userMessage.textContent = "User: " + userInput;
+            userMessage.classList.add('user-message');
+            chatBox.appendChild(userMessage);
+
+            let apiKey = getApiKey();
+            if (!apiKey) {
+                alert('Please enter and save your API Key first.');
+                return;
+            }
+
+            fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: messages
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                let botMessageContent = data.choices[0].message.content;
+                messages.push({role: "assistant", content: botMessageContent});
+
+                let botMessage = document.createElement('div');
+                botMessage.textContent = "Bot: " + botMessageContent;
+                botMessage.classList.add('bot-message');
+                chatBox.appendChild(botMessage);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+            event.target.value = '';
+        }
+    }
+});
+
+document.getElementById('clear-chat-btn').addEventListener('click', function() {
+    messages = [];
+
+    let chatBox = document.getElementById('chat-box');
+    chatBox.innerHTML = '';
+});
