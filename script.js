@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Get references to various DOM elements
     const currentTime = document.getElementById('current-time');
     const currentDate = document.getElementById('current-date');
     const addTaskModal = document.getElementById('add-task-modal');
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterBtn = document.getElementById('filter-btn');
     const calendarBtn = document.getElementById('calendar-btn');
 
+    // Initialize variables for tasks, notes, and calendar
     let tasks = [];
     let notes = [];
     let editingTaskIndex = -1;
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
+    // Update time and date every second
     function updateTime() {
         const now = new Date();
         currentTime.textContent = now.toLocaleTimeString();
@@ -28,14 +31,16 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(updateTime, 1000);
     updateTime();
 
+    // Load tasks and notes from local storage and render them
     function loadTasksAndNotes() {
         tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         notes = JSON.parse(localStorage.getItem('notes')) || [];
         renderTasks(tasks);
         renderNotes(notes);
-        renderCalendar(currentYear, currentMonth); // 渲染日历
+        renderCalendar(currentYear, currentMonth); // Render calendar
     }
 
+    // Render tasks in the task list
     function renderTasks(tasksToRender) {
         taskList.innerHTML = '';
         tasksToRender.forEach((task, index) => {
@@ -43,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Render notes in the note list
     function renderNotes(notesToRender) {
         noteList.innerHTML = '';
         notesToRender.forEach((note, index) => {
@@ -50,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Render the calendar for a specific year and month
     function renderCalendar(year, month) {
         const calendarBody = document.getElementById('calendar-body');
         calendarBody.innerHTML = '';
@@ -88,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Change the current month displayed in the calendar
     function changeMonth(offset) {
         currentMonth += offset;
         if (currentMonth < 0) {
@@ -100,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar(currentYear, currentMonth);
     }
 
+    // Add a task to the task table
     function addTaskToTable(task, index) {
         const taskItem = document.createElement('tr');
         taskItem.dataset.index = index;
@@ -132,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
         taskList.appendChild(taskItem);
     }
 
+    // Add a note to the note table
     function addNoteToTable(note, index) {
         const noteItem = document.createElement('tr');
         noteItem.dataset.index = index;
@@ -152,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         noteList.appendChild(noteItem);
     }
 
+    // Open modal for editing a task
     function openEditModal(index) {
         const task = tasks[index];
         document.getElementById('task-title').value = task.title;
@@ -167,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         autoResizeTextarea();
     }
 
+    // Open modal for editing a note
     function openEditNoteModal(index) {
         const note = notes[index];
         document.getElementById('task-title').value = note.title;
@@ -180,12 +192,14 @@ document.addEventListener('DOMContentLoaded', function () {
         autoResizeTextarea();
     }
 
+    // Automatically resize the textarea based on content
     function autoResizeTextarea() {
         const textarea = document.getElementById('task-description');
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
     }
 
+    // Save task or note when save button is clicked
     saveTaskBtn.onclick = function () {
         const title = document.getElementById('task-title').value;
         const tag = document.getElementById('task-tag').value;
@@ -219,6 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar(currentYear, currentMonth);
     };
 
+    // Clear input fields in the modal
     function clearInputFields() {
         document.getElementById('task-title').value = '';
         document.getElementById('task-tag').value = '';
@@ -227,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('task-description').value = '';
     }
 
+    // Delete a task
     window.deleteTask = function(event) {
         event.stopPropagation();
         const index = event.target.closest('tr').dataset.index;
@@ -236,6 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar(currentYear, currentMonth);
     };
 
+    // Delete a note
     window.deleteNote = function(event) {
         event.stopPropagation();
         const index = event.target.closest('tr').dataset.index;
@@ -244,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderNotes(notes);
     };
 
+    // Open modal for adding a new task or note
     addBtn.onclick = function () {
         clearInputFields();
         addTaskModal.style.display = "block";
@@ -259,16 +277,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    // Close the modal
     closeModal.onclick = function () {
         addTaskModal.style.display = "none";
     };
 
+    // Close the modal when clicking outside of it
     window.onclick = function (event) {
         if (event.target == addTaskModal) {
             addTaskModal.style.display = "none";
         }
     };
 
+    // Show tasks view
     todoBtn.onclick = function () {
         isViewingNotes = false;
         document.getElementById('task-table').style.display = "table";
@@ -278,6 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('calendar').style.display = "none";
     };
 
+    // Show notes view
     notesBtn.onclick = function () {
         isViewingNotes = true;
         document.getElementById('task-table').style.display = "none";
@@ -287,6 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('calendar').style.display = "none";
     };
 
+    // Show calendar view
     calendarBtn.onclick = function () {
         isViewingNotes = false;
         document.getElementById('task-table').style.display = "none";
@@ -296,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function () {
         filterBtn.style.display = "none";
     };
 
+    // Sort tasks when clicking on table headers
     const tableHeaders = document.querySelectorAll('#task-table th');
     tableHeaders.forEach((header, index) => {
         header.addEventListener('click', () => {
@@ -303,6 +327,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Sort tasks based on the selected column
     function sortTasks(index) {
         const sortKey = ['title', 'tag', 'priority', 'date', 'description'][index];
         const priorityOrder = { 'High': 1, 'Medium': 2, 'Low': 3 };
@@ -319,6 +344,7 @@ document.addEventListener('DOMContentLoaded', function () {
         renderTasks(tasks);
     }
 
+    // Filter modal elements
     const filterModal = document.getElementById('filter-modal');
     const closeFilterModal = document.getElementById('close-filter-modal');
     const applyFilterBtn = document.getElementById('apply-filter-btn');
@@ -326,6 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterTagTodo = document.getElementById('filter-tag-todo');
     const filterTagNotes = document.getElementById('filter-tag');
 
+    // Open filter modal
     filterBtn.onclick = function () {
         filterModal.style.display = "block";
         populateTags();
@@ -341,6 +368,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    // Populate filter dropdowns with tags
     function populateTags() {
         const tagsNotes = new Set(notes.map(note => note.tag));
         const tagsTasks = new Set(tasks.map(task => task.tag));
@@ -362,6 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Apply filters to tasks or notes
     applyFilterBtn.onclick = function () {
         if (isViewingNotes) {
             const tag = filterTagNotes.value;
@@ -390,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function () {
         filterModal.style.display = "none";
     };
 
+    // Reset filters
     resetFilterBtn.onclick = function () {
         if (isViewingNotes) {
             filterTagNotes.value = '';
@@ -403,27 +433,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    // Close filter modal
     closeFilterModal.onclick = function () {
         filterModal.style.display = "none";
     };
 
+    // Close filter modal when clicking outside of it
     window.onclick = function (event) {
         if (event.target == filterModal) {
             filterModal.style.display = "none";
         }
     };
 
+    // Change to previous month in the calendar
     document.getElementById('prev-month-btn').onclick = function () {
         changeMonth(-1);
     };
 
+    // Change to next month in the calendar
     document.getElementById('next-month-btn').onclick = function () {
         changeMonth(1);
     };
 
+    // Load tasks and notes initially
     loadTasksAndNotes();
 });
 
+// Initialize chat messages array
 let messages = [];
 document.getElementById('save-api-key-btn').addEventListener('click', function() {
     let apiKey = document.getElementById('api-key-input').value;
@@ -435,10 +471,12 @@ document.getElementById('save-api-key-btn').addEventListener('click', function()
     }
 });
 
+// Retrieve saved API key from local storage
 function getApiKey() {
     return localStorage.getItem('chatgpt_api_key');
 }
 
+// Handle chat input and fetch response from API
 document.getElementById('chat-input').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         let userInput = event.target.value;
@@ -487,6 +525,7 @@ document.getElementById('chat-input').addEventListener('keypress', function(even
     }
 });
 
+// Clear chat messages
 document.getElementById('clear-chat-btn').addEventListener('click', function() {
     messages = [];
 

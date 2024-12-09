@@ -8,23 +8,27 @@
 </head>
 <body>
     <div class="container">
+        <!-- Sidebar for navigation and time display -->
         <div class="sidebar">
             <div class="time">
-                <div id="current-time"></div>
-                <div id="current-date"></div>
+                <div id="current-time"></div> <!-- Display current time -->
+                <div id="current-date"></div> <!-- Display current date -->
             </div>
             <div class="nav-buttons">
+                <!-- Navigation buttons for different sections -->
                 <button id="todo-btn">Todo</button>
                 <button id="notes-btn">Notes</button>
                 <button id="calendar-btn">Calendar</button>
             </div>
         </div>
         <div class="main">
+            <!-- Header with add and filter buttons -->
             <div class="header">
                 <button id="add-btn">+ Add</button>
                 <button id="filter-btn">Filter</button>
             </div>
             <div class="content" id="content-area">
+                <!-- Table for task list -->
                 <table id="task-table">
                     <thead>
                         <tr>
@@ -36,9 +40,10 @@
                         </tr>
                     </thead>
                     <tbody id="task-list">
-                        <!-- tasklist -->
+                        <!-- Task list will be dynamically populated here -->
                     </tbody>
                 </table>
+                <!-- Table for note list, initially hidden -->
                 <table id="note-table" style="display:none;">
                     <thead>
                         <tr>
@@ -48,9 +53,10 @@
                         </tr>
                     </thead>
                     <tbody id="note-list">
-                        <!-- notelist -->
+                        <!-- Note list will be dynamically populated here -->
                     </tbody>
                 </table>
+                <!-- Calendar section, initially hidden -->
                 <div id="calendar" style="display:none;">
                     <h2>Calendar</h2>
                     <button id="prev-month-btn">Last Month</button>
@@ -68,7 +74,7 @@
                             </tr>
                         </thead>
                         <tbody id="calendar-body">
-                            <!-- calendar -->
+                            <!-- Calendar will be dynamically populated here -->
                         </tbody>
                     </table>
                 </div>
@@ -76,17 +82,17 @@
         </div>
         <div class="chat">
             <div id="chat-box">
-                <!-- chat -->
+                <!-- Chat messages will appear here -->
             </div>
             <input type="text" id="chat-input" placeholder="Input...">
             <button id="clear-chat-btn">Clear Chat</button> 
-        
             <div id="api-key-section">
                 <input type="password" id="api-key-input" placeholder="Enter API Key...">
                 <button id="save-api-key-btn">Save API Key</button>
             </div>
         </div>
     </div>
+    <!-- Modal for adding tasks -->
     <div id="add-task-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -110,6 +116,7 @@
             <button id="save-task-btn">Save</button>
         </div>
     </div>
+    <!-- Modal for filtering tasks and notes -->
     <div id="filter-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="close-filter-modal">&times;</span>
@@ -133,7 +140,7 @@
                 <label for="filter-tag-todo">Tag:</label>
                 <select id="filter-tag-todo">
                     <option value="">All</option>
-                    <!-- filter tag dynamic generate -->
+                    <!-- Filter tags will be dynamically generated here -->
                 </select>
             </div>
     
@@ -141,7 +148,7 @@
                 <label for="filter-tag">Tag:</label>
                 <select id="filter-tag">
                     <option value="">All</option>
-                    <!-- filter tag dynamic generate -->
+                    <!-- Filter tags will be dynamically generated here -->
                 </select>
             </div>
     
@@ -152,5 +159,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
